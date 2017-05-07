@@ -1,6 +1,6 @@
 //
 //  Main.swift
-//  Tst
+//  Tests
 //
 
 import XCTest

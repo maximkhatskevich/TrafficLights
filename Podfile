@@ -30,7 +30,7 @@ end
 
 #===
 
-target repoName do
+target 'App' do
 
 	project projectName
 
