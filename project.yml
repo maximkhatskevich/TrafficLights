@@ -1,0 +1,77 @@
+# generated with MKHProjGen
+# https://github.com/maximkhatskevich/MKHProjGen
+# https://github.com/workshop/struct/wiki/Spec-format:-v1.3
+version: 1.3.0
+configurations:
+  Debug:
+    type: "debug"
+    profiles:
+    - "general:debug"
+    overrides:
+      IPHONEOS_DEPLOYMENT_TARGET: "9.0"
+      SWIFT_VERSION: "3.0"
+      VERSIONING_SYSTEM: "apple-generic"
+      CURRENT_PROJECT_VERSION: "1"
+      SWIFT_OPTIMIZATION_LEVEL: "-Onone"
+  Release:
+    type: "release"
+    profiles:
+    - "general:release"
+    overrides:
+      IPHONEOS_DEPLOYMENT_TARGET: "9.0"
+      SWIFT_VERSION: "3.0"
+      VERSIONING_SYSTEM: "apple-generic"
+      CURRENT_PROJECT_VERSION: "1"
+      DEBUG_INFORMATION_FORMAT: "dwarf-with-dsym"
+      SWIFT_OPTIMIZATION_LEVEL: "-Owholemodule"
+targets:
+  App:
+    platform: "ios"
+    type: ":application"
+    sources:
+    - "Src"
+    - "Res"
+    excludes:
+      files:
+      - "**/*.storyboard"
+    configurations:
+      Debug:
+        IPHONEOS_DEPLOYMENT_TARGET: "9.0"
+        PRODUCT_BUNDLE_IDENTIFIER: "com.SafetyCulture.TrafficLights"
+        INFOPLIST_FILE: "Info/App.plist"
+        ASSETCATALOG_COMPILER_APPICON_NAME: "App"
+        ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME: "App"
+        SDKROOT: "iphoneos"
+        TARGETED_DEVICE_FAMILY: "1"
+        MTL_ENABLE_DEBUG_INFO: "true"
+      Release:
+        IPHONEOS_DEPLOYMENT_TARGET: "9.0"
+        PRODUCT_BUNDLE_IDENTIFIER: "com.SafetyCulture.TrafficLights"
+        INFOPLIST_FILE: "Info/App.plist"
+        ASSETCATALOG_COMPILER_APPICON_NAME: "App"
+        ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME: "App"
+        SDKROOT: "iphoneos"
+        TARGETED_DEVICE_FAMILY: "1"
+  Tests:
+    platform: "ios"
+    type: ":bundle.unit-test"
+    references:
+    - "App"
+    sources:
+    - "Tst"
+    configurations:
+      Debug:
+        IPHONEOS_DEPLOYMENT_TARGET: "9.0"
+        PRODUCT_BUNDLE_IDENTIFIER: "com.SafetyCulture.TrafficLights.Tst"
+        INFOPLIST_FILE: "Info/Tst.plist"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/App.app/App"
+        MTL_ENABLE_DEBUG_INFO: "true"
+      Release:
+        IPHONEOS_DEPLOYMENT_TARGET: "9.0"
+        PRODUCT_BUNDLE_IDENTIFIER: "com.SafetyCulture.TrafficLights.Tst"
+        INFOPLIST_FILE: "Info/Tst.plist"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/App.app/App"
+variants:
+  $base:
+    abstract: true
+  Main:
