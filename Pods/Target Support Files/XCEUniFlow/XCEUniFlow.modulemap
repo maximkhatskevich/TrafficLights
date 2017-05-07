@@ -1,0 +1,6 @@
+framework module XCEUniFlow {
+  umbrella header "XCEUniFlow-umbrella.h"
+
+  export *
+  module * { export * }
+}

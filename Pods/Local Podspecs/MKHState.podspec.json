@@ -1,0 +1,23 @@
+{
+  "name": "MKHState",
+  "version": "2.4.0",
+  "summary": "Turn any object into a discrete system and describe its states in a declarative style.",
+  "homepage": "https://github.com/maximkhatskevich/#{s.name}",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Maxim Khatskevich": "maxim@khatskevi.ch"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source": {
+    "git": "#{s.homepage}.git",
+    "tag": "#{s.version}"
+  },
+  "source_files": "Src/**/*.swift",
+  "requires_arc": true,
+  "social_media_url": "http://www.linkedin.com/in/maximkhatskevich"
+}

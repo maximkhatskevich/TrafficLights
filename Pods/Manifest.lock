@@ -1,0 +1,54 @@
+PODS:
+  - MKHState (2.4.0)
+  - MKHViewEvents (1.0.1)
+  - R.swift (3.2.0):
+    - R.swift.Library (~> 3.0.2)
+  - R.swift.Library (3.0.2)
+  - Reveal-SDK (8)
+  - SteviaLayout (3.1.3)
+  - SwiftyTimer (2.0.0)
+  - XCERequirement (1.4.3)
+  - XCETesting (1.1.0):
+    - XCERequirement (~> 1.4)
+  - XCEUniFlow (3.2.6):
+    - XCERequirement (~> 1.4)
+
+DEPENDENCIES:
+  - MKHState (from `https://github.com/maximkhatskevich/MKHState.git`)
+  - MKHViewEvents (from `https://github.com/maximkhatskevich/MKHViewEvents.git`)
+  - R.swift
+  - Reveal-SDK
+  - SteviaLayout (~> 3.0)
+  - SwiftyTimer (~> 2.0)
+  - XCETesting (~> 1.1)
+  - XCEUniFlow (~> 3.2)
+
+EXTERNAL SOURCES:
+  MKHState:
+    :git: https://github.com/maximkhatskevich/MKHState.git
+  MKHViewEvents:
+    :git: https://github.com/maximkhatskevich/MKHViewEvents.git
+
+CHECKOUT OPTIONS:
+  MKHState:
+    :commit: f907933d87cc04dda1d41acbcc9cce56802141f4
+    :git: https://github.com/maximkhatskevich/MKHState.git
+  MKHViewEvents:
+    :commit: 4400e669b5e53d5d5d1c72dbbef751f431908d44
+    :git: https://github.com/maximkhatskevich/MKHViewEvents.git
+
+SPEC CHECKSUMS:
+  MKHState: abafd7c504b4a210d20bae5ea9cf920d65eb5db1
+  MKHViewEvents: 05e4d36e49113df73fc615d714936a2d14c70d55
+  R.swift: 207a372a2b5977caef440c696a368009460641d1
+  R.swift.Library: fbdec16c9802ad104fc1ba53415dc190e6ec5c73
+  Reveal-SDK: 43be4e662864e937960d0d04d005135e29c4e53b
+  SteviaLayout: 807c742a8e4bcb94f47f018b23873a40f1f1cc1d
+  SwiftyTimer: 2efd74b060d69ad4f1496baf5bbedbe132125fcf
+  XCERequirement: 38a1e135626757fd97d4e9da481a89b4537977a8
+  XCETesting: f919f505728e88c797ed9e0e877a80e0ed3672a0
+  XCEUniFlow: 518b5d15149f2d6b94299b31f54c0c7777739f20
+
+PODFILE CHECKSUM: 4a93d6808b4529bc6a728aaec4320a2a6b505dde
+
+COCOAPODS: 1.2.1

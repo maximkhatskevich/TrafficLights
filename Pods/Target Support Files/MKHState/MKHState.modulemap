@@ -1,0 +1,6 @@
+framework module MKHState {
+  umbrella header "MKHState-umbrella.h"
+
+  export *
+  module * { export * }
+}
