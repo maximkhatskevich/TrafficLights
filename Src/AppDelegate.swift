@@ -23,6 +23,7 @@ extension AppDelegate: UIApplicationDelegate
         ) -> Bool
     {
         window = UIWindow(frame: UIScreen.main.bounds)
+        window?.backgroundColor = .white
         window?.rootViewController = ViewController()
         window?.makeKeyAndVisible()
         
