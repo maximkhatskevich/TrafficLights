@@ -61,7 +61,7 @@
 		55F47217958CD746CF3E6FEE /* R.generated.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		5D6B5693FC23B1AD7F28EAF8 /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		83BD7610D073BEC15EF39D0D /* Pods_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		84C97AF44F4D4367ED2FE77D /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		84C97AF44F4D4367ED2FE77D /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = App.app; path = TrafficLights.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FEABDB195B68EB670353821 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		A890FA0A1F2DDE405D238719 /* Pods-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.release.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.release.xcconfig"; sourceTree = "<group>"; };
 		BC2C2152A00DD45DBA314FD1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -107,7 +107,6 @@
 				07E03CB7ED7B82730C436137 /* LaunchScreen.storyboard */,
 				EA5FE7E927EAD2987BF75A63 /* ViewController.swift */,
 			);
-			name = Src;
 			path = Src;
 			sourceTree = SOURCE_ROOT;
 		};
@@ -117,7 +116,6 @@
 				012597FE95A0A6AFCF2E53C0 /*  Main.xcassets */,
 				55F47217958CD746CF3E6FEE /* R.generated.swift */,
 			);
-			name = Res;
 			path = Res;
 			sourceTree = SOURCE_ROOT;
 		};
@@ -135,7 +133,6 @@
 			children = (
 				4940DA8565C57FAD25E60C72 /* Main.swift */,
 			);
-			name = Tst;
 			path = Tst;
 			sourceTree = SOURCE_ROOT;
 		};
@@ -178,14 +175,14 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = "$subproj";
+			name = $subproj;
 			sourceTree = "<group>";
 		};
 		DF685F2F71B0831201EE5653 /* $local */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			name = "$local";
+			name = $local;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
