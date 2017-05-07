@@ -55,11 +55,11 @@ let project = Project("Main") { p in
         
         t.include("Src", "Res")
         
-        t.exclude("**/*.storyboard")
-        
         //---
         
         t.configurations.all.override(
+            
+            "PRODUCT_NAME" <<< My.repoName,
             
             // intentionally repeat again, Struct bug wokraround
             "IPHONEOS_DEPLOYMENT_TARGET" <<< My.deploymentTarget,
@@ -68,7 +68,6 @@ let project = Project("Main") { p in
             "INFOPLIST_FILE" <<< "Info/App.plist",
             
             "ASSETCATALOG_COMPILER_APPICON_NAME" <<< t.name,
-            "ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME" <<< t.name,
             
             //--- iOS related:
             

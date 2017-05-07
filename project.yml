@@ -31,25 +31,22 @@ targets:
     sources:
     - "Src"
     - "Res"
-    excludes:
-      files:
-      - "**/*.storyboard"
     configurations:
       Debug:
+        PRODUCT_NAME: "TrafficLights"
         IPHONEOS_DEPLOYMENT_TARGET: "9.0"
         PRODUCT_BUNDLE_IDENTIFIER: "com.SafetyCulture.TrafficLights"
         INFOPLIST_FILE: "Info/App.plist"
         ASSETCATALOG_COMPILER_APPICON_NAME: "App"
-        ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME: "App"
         SDKROOT: "iphoneos"
         TARGETED_DEVICE_FAMILY: "1"
         MTL_ENABLE_DEBUG_INFO: "true"
       Release:
+        PRODUCT_NAME: "TrafficLights"
         IPHONEOS_DEPLOYMENT_TARGET: "9.0"
         PRODUCT_BUNDLE_IDENTIFIER: "com.SafetyCulture.TrafficLights"
         INFOPLIST_FILE: "Info/App.plist"
         ASSETCATALOG_COMPILER_APPICON_NAME: "App"
-        ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME: "App"
         SDKROOT: "iphoneos"
         TARGETED_DEVICE_FAMILY: "1"
   Tests:
