@@ -31,7 +31,7 @@ extension M.Core
     {
         return initialization(into: Ready.self) { next in
             
-//            next{ ... }
+//            next{ M.Intersection.setup() }
         }
     }
 }

@@ -14,6 +14,6 @@ extension M
 {
     enum TrafficLight
     {
-        case Red, Yellow, Green
+        case red, yellow, green
     }
 }
