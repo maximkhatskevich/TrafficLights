@@ -34,7 +34,7 @@ class V_Root_View: UIView, DispatcherInitializable
     
     lazy
     var state: StateCtrl<V_Root_View> =
-        StateCtrl(for: self, V.Default.viewAnim())
+        StateCtrl(for: self, V_Root_View.anim())
     
     //===
     
@@ -93,4 +93,23 @@ extension V_Root_View
 extension V_Root_View: DiscreteSystem
 {
     typealias St = State<V_Root_View>
+    
+    //===
+    
+    static
+    func anim() -> Transition<V_Root_View>
+    {
+        return { (v, m, c) in
+            
+            v.status.alpha = 0.0
+            
+            //===
+            
+            m()
+            
+            //===
+            
+            V.Default.anim({ v.status.alpha = 1.0 }, c)
+        }
+    }
 }
