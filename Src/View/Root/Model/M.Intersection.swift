@@ -213,7 +213,7 @@ extension M.Intersection
     }
     
     static
-    func toggle() -> Action
+    func toggle(with p: Params = Params.defaults) -> Action
     {
         return trigger { m, next in
             
@@ -230,7 +230,7 @@ extension M.Intersection
                     next{ stop() }
                 
                 case is Ready:
-                    next{ start() }
+                    next{ start(with: p) }
                 
                 default:
                     break

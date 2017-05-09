@@ -8,7 +8,9 @@ import XCTest
 @testable
 import TrafficLights
 
+@testable
 import XCEUniFlow
+
 import XCETesting
 
 //===
@@ -50,49 +52,323 @@ class Tst_M_Intersection: XCTestCase
     
     func testSetup()
     {
-        let expect = expectation(
-            description: "Intersection.setup transition")
+        RXC.isNil("M.Intersection is NOT presented in GlobalModel yet") {
+            
+            self.dispatcher.model ==> M.Intersection.self
+        }
         
         //===
         
-        proxy
-            .submit{ M.Intersection.setup() }
+        dispatcher.process(M.Intersection.setup())
+        
+        //===
+        
+        RXC.isNotNil("M.Intersection is in Ready state") {
+            
+            self.dispatcher.model ==> M.Intersection.Ready.self
+        }
+    }
+    
+    func testStart()
+    {
+        dispatcher.model <== M.Intersection.Ready()
+        
+        //===
+        
+        dispatcher.process(M.Intersection.start(with: params))
+        
+        //===
+        
+        let op = RXC.value("M.Intersection is in Operating state") {
+            
+            self.dispatcher.model ==> M.Intersection.Operating.self
+        }
+        
+        RXC.isTrue("Operating state initial properties are coorect") {
+            
+            (op?.timeLeft == self.params.change) &&
+            (op?.northSouth == .green) &&
+            (op?.eastWest == .red)
+        }
+    }
+    
+    func testTick()
+    {
+        let randomTimeLeft = 184.92.seconds
+        
+        //===
+        
+        dispatcher.model <== M.Intersection.Operating(
+            params: params,
+            tick: Timer.new(after: 100, {}),
+            timeLeft: randomTimeLeft + params.tick,
+            northSouth: .green,
+            eastWest: .red
+        )
+        
+        //===
+        
+        dispatcher.process(M.Intersection.tick())
+        
+        //===
+        
+        let op = dispatcher.model ==> M.Intersection.Operating.self
+        
+        RXC.isTrue("Operating state updated time left is correct") {
+            
+            op?.timeLeft == randomTimeLeft
+        }
+    }
+    
+    func testGreenNorthSouth()
+    {
+        dispatcher.model <== M.Intersection.Operating(
+            params: params,
+            tick: Timer.new(after: 100, {}),
+            timeLeft: 0,
+            northSouth: .red,
+            eastWest: .yellow
+        )
+        
+        //===
+        
+        dispatcher.process(M.Intersection.greenNorthSouth())
+        
+        //===
+        
+        let op = RXC.value("M.Intersection is in Operating state") {
+            
+            self.dispatcher.model ==> M.Intersection.Operating.self
+        }
+        
+        RXC.isTrue("Operating state updated properties are coorect") {
+            
+            (op?.timeLeft == self.params.change) &&
+            (op?.northSouth == .green) &&
+            (op?.eastWest == .red)
+        }
+    }
+    
+    func testYellowNorthSouth()
+    {
+        dispatcher.model <== M.Intersection.Operating(
+            params: params,
+            tick: Timer.new(after: 100, {}),
+            timeLeft: self.params.green,
+            northSouth: .green,
+            eastWest: .red
+        )
+        
+        //===
+        
+        dispatcher.process(M.Intersection.yellowNorthSouth())
+        
+        //===
+        
+        let op = RXC.value("M.Intersection is in Operating state") {
+            
+            self.dispatcher.model ==> M.Intersection.Operating.self
+        }
+        
+        RXC.isTrue("Operating state updated properties are coorect") {
+            
+            (op?.timeLeft == self.params.green) &&
+            (op?.northSouth == .yellow)
+        }
+    }
+    
+    func testGreenEastWest()
+    {
+        dispatcher.model <== M.Intersection.Operating(
+            params: params,
+            tick: Timer.new(after: 100, {}),
+            timeLeft: 0,
+            northSouth: .yellow,
+            eastWest: .red
+        )
+        
+        //===
+        
+        dispatcher.process(M.Intersection.greenEastWest())
+        
+        //===
+        
+        let op = RXC.value("M.Intersection is in Operating state") {
+            
+            self.dispatcher.model ==> M.Intersection.Operating.self
+        }
+        
+        RXC.isTrue("Operating state updated properties are coorect") {
+            
+            (op?.timeLeft == self.params.change) &&
+            (op?.northSouth == .red) &&
+            (op?.eastWest == .green)
+        }
+    }
+    
+    func testYellowEastWest()
+    {
+        dispatcher.model <== M.Intersection.Operating(
+            params: params,
+            tick: Timer.new(after: 100, {}),
+            timeLeft: self.params.green,
+            northSouth: .red,
+            eastWest: .green
+        )
+        
+        //===
+        
+        dispatcher.process(M.Intersection.yellowEastWest())
+        
+        //===
+        
+        let op = RXC.value("M.Intersection is in Operating state") {
+            
+            self.dispatcher.model ==> M.Intersection.Operating.self
+        }
+        
+        RXC.isTrue("Operating state updated properties are coorect") {
+            
+            (op?.timeLeft == self.params.green) &&
+            (op?.eastWest == .yellow)
+        }
+    }
+    
+    func testStop()
+    {
+        dispatcher.model <== M.Intersection.Operating(
+            params: params,
+            tick: Timer.new(after: 100, {}),
+            timeLeft: 3.54.seconds, // random value
+            northSouth: .yellow, // random value
+            eastWest: .yellow    // random value
+        )
+        
+        // NOTE: We set incorrect combination of
+        // current traffic lights states, because
+        // the 'stop' transition must not check them
+        // or depend on them at all.
+        
+        //===
+        
+        dispatcher.process(M.Intersection.stop())
+        
+        //===
+        
+        RXC.isNotNil("M.Intersection is in Ready state") {
+            
+            self.dispatcher.model ==> M.Intersection.Ready.self
+        }
+    }
+    
+    func testToggleStart()
+    {
+        dispatcher.model <== M.Intersection.Ready()
+        
+        //===
+        
+        let hasStarted = expectation(
+            description: "Intersection is in Operating state now"
+        )
+        
+        //===
+        
+        dispatcher.process(M.Intersection.toggle(with: params))
+        
+        //===
         
         proxy
             .subscribeLater(self)
             .onUpdate { m in
                 
-                RXC.isNotNil("Intersection IS in Ready state") {
-                    
-                    m ==> M.Intersection.Ready.self
+                if
+                    let _ = m ==> M.Intersection.Operating.self
+                {
+                    hasStarted.fulfill()
                 }
-                
-                //===
-                
-                self.proxy.unsubscribe(self)
-                expect.fulfill()
             }
         
         //===
         
-        waitForExpectations(timeout: 3.0)
+        waitForExpectations(timeout: 1.0)
+    }
+    
+    func testToggleStop()
+    {
+        dispatcher.model <== M.Intersection.Operating(
+            params: params,
+            tick: Timer.new(after: 100, {}),
+            timeLeft: 3.54.seconds, // random value
+            northSouth: .yellow, // random value
+            eastWest: .yellow    // random value
+        )
+        
+        // NOTE: We set incorrect combination of
+        // current traffic lights states, because
+        // the 'stop' transition must not check them
+        // or depend on them at all.
+        
+        //===
+        
+        let hasStopped = expectation(
+            description: "Intersection is in Ready state now"
+        )
+        
+        //===
+        
+        dispatcher.process(M.Intersection.toggle())
+        
+        //===
+        
+        proxy
+            .subscribeLater(self)
+            .onUpdate { m in
+                
+                if
+                    let _ = m ==> M.Intersection.Ready.self
+                {
+                    hasStopped.fulfill()
+                }
+        }
+        
+        //===
+        
+        waitForExpectations(timeout: 1.0)
     }
     
     func testHappyPath()
     {
-        let isReady = expectation(
-            description: "Intersection IS in Ready state"
-        )
+        dispatcher.process(M.Intersection.setup())
         
-        let isOperating = expectation(
-            description: "Intersection IS in Operating state"
-        )
+        //===
         
-        let initialLights = expectation(
-            description: "Start with North-South green and East-West red"
-        )
+        RXC.isNotNil("M.Intersection is in Ready state now") {
+            
+            self.dispatcher.model ==> M.Intersection.Ready.self
+        }
         
-        var initialized = false
+        //===
+        
+        dispatcher.process(M.Intersection.start(with: self.params))
+        
+        //===
+        
+        RXC.isTrue("Operating state initial properties are correct") {
+            
+            let op = RXC.value("M.Intersection is in Operating state") {
+                
+                self.dispatcher.model ==> M.Intersection.Operating.self
+            }
+            
+            //===
+        
+            return
+                (op?.timeLeft == self.params.change) &&
+                (op?.northSouth == .green) &&
+                (op?.eastWest == .red)
+        }
+        
+        //===
         
         let isGreenNorthSouth = expectation(
             description: "North-South is green and red East-West"
@@ -112,87 +388,52 @@ class Tst_M_Intersection: XCTestCase
         
         //===
         
-        proxy
-            .submit{ M.Intersection.setup() }
-        
-        proxy
-            .submit{ M.Intersection.start(with: self.params) }
+        func prepare(m: GlobalModel) -> M.Intersection.Operating?
+        {
+            return m ==> M.Intersection.Operating.self
+        }
         
         //===
         
         proxy
             .subscribeLater(self)
-            .onUpdate { m in
+            .onConvert(prepare)
+            .onUpdate { op in
                 
                 if
-                    let _ = m ==> M.Intersection.Ready.self
+                    (op.northSouth == .green) &&
+                    (op.eastWest == .red) &&
+                    (op.timeLeft == self.params.change)
                 {
-                    isReady.fulfill()
+                    isGreenNorthSouth.fulfill()
                 }
                 
                 //===
                 
                 if
-                    !initialized,
-                    let op = m ==> M.Intersection.Operating.self
+                    (op.northSouth == .yellow) &&
+                    (op.timeLeft == self.params.green)
                 {
-                    initialized = true
-                    
-                    //===
-                    
-                    isOperating.fulfill()
-                    
-                    //===
-                    
-                    if
-                        (op.northSouth == .green) &&
-                        (op.eastWest == .red) &&
-                        (op.timeLeft == self.params.change)
-                    {
-                        initialLights.fulfill()
-                    }
+                    isYellowNorthSouth.fulfill()
                 }
                 
                 //===
                 
                 if
-                    let op = m ==> M.Intersection.Operating.self
+                    (op.northSouth == .red) &&
+                    (op.eastWest == .green) &&
+                    (op.timeLeft == self.params.change)
                 {
-                    if
-                        (op.northSouth == .green) &&
-                        (op.eastWest == .red) &&
-                        (op.timeLeft == self.params.change)
-                    {
-                        isGreenNorthSouth.fulfill()
-                    }
-                    
-                    //===
-                    
-                    if
-                        (op.northSouth == .yellow) &&
-                        (op.timeLeft == self.params.green)
-                    {
-                        isYellowNorthSouth.fulfill()
-                    }
-                    
-                    //===
-                    
-                    if
-                        (op.northSouth == .red) &&
-                        (op.eastWest == .green) &&
-                        (op.timeLeft == self.params.change)
-                    {
-                        isGreenEastWest.fulfill()
-                    }
-                    
-                    //===
-                    
-                    if
-                        (op.eastWest == .yellow) &&
-                        (op.timeLeft == self.params.green)
-                    {
-                        isYellowEastWest.fulfill()
-                    }
+                    isGreenEastWest.fulfill()
+                }
+                
+                //===
+                
+                if
+                    (op.eastWest == .yellow) &&
+                    (op.timeLeft == self.params.green)
+                {
+                    isYellowEastWest.fulfill()
                 }
             }
         

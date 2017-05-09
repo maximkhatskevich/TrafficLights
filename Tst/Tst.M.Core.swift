@@ -11,7 +11,9 @@ import XCTest
 @testable
 import TrafficLights
 
+@testable
 import XCEUniFlow
+
 import XCETesting
 
 //===
@@ -47,30 +49,20 @@ class Tst_M_Core: XCTestCase
     
     func testSetup()
     {
-        let expect = expectation(description: "Core.setup transition")
+        RXC.isNil("M.Core is NOT presented in GlobalModel yet") {
+            
+            self.dispatcher.model ==> M.Core.self
+        }
         
         //===
         
-        proxy
-            .submit{ M.Core.setup() }
-        
-        proxy
-            .subscribeLater(self)
-            .onUpdate { m in
-                
-                RXC.isNotNil("Core IS in Ready state") {
-                    
-                    m ==> M.Core.Ready.self
-                }
-                
-                //===
-                
-                self.proxy.unsubscribe(self)
-                expect.fulfill()
-            }
+        self.dispatcher.process(M.Core.setup())
         
         //===
         
-        waitForExpectations(timeout: 3.0)
+        RXC.isNotNil("M.Core IS presented in GlobalModel now") {
+            
+            self.dispatcher.model ==> M.Core.self
+        }
     }
 }
