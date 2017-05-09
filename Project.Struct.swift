@@ -72,7 +72,7 @@ let project = Project("Main") { p in
             //--- iOS related:
             
             "SDKROOT" <<< "iphoneos",
-            "TARGETED_DEVICE_FAMILY" <<< DeviceFamily.iOS.phone
+            "TARGETED_DEVICE_FAMILY" <<< DeviceFamily.iOS.universal
         )
         
         t.configurations.debug.override(

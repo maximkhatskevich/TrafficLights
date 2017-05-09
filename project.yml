@@ -39,7 +39,7 @@ targets:
         INFOPLIST_FILE: "Info/App.plist"
         ASSETCATALOG_COMPILER_APPICON_NAME: "App"
         SDKROOT: "iphoneos"
-        TARGETED_DEVICE_FAMILY: "1"
+        TARGETED_DEVICE_FAMILY: "1,2"
         MTL_ENABLE_DEBUG_INFO: "true"
       Release:
         PRODUCT_NAME: "TrafficLights"
@@ -48,7 +48,7 @@ targets:
         INFOPLIST_FILE: "Info/App.plist"
         ASSETCATALOG_COMPILER_APPICON_NAME: "App"
         SDKROOT: "iphoneos"
-        TARGETED_DEVICE_FAMILY: "1"
+        TARGETED_DEVICE_FAMILY: "1,2"
   Tests:
     platform: "ios"
     type: ":bundle.unit-test"
