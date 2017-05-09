@@ -100,7 +100,8 @@ class Tst_M_Intersection: XCTestCase
         
         dispatcher.model <== M.Intersection.Operating(
             params: params,
-            tick: Timer.new(after: 100, {}),
+            tick: nil,
+            next: nil,
             timeLeft: randomTimeLeft + params.tick,
             northSouth: .green,
             eastWest: .red
@@ -124,7 +125,8 @@ class Tst_M_Intersection: XCTestCase
     {
         dispatcher.model <== M.Intersection.Operating(
             params: params,
-            tick: Timer.new(after: 100, {}),
+            tick: nil,
+            next: nil,
             timeLeft: 0,
             northSouth: .red,
             eastWest: .yellow
@@ -153,7 +155,8 @@ class Tst_M_Intersection: XCTestCase
     {
         dispatcher.model <== M.Intersection.Operating(
             params: params,
-            tick: Timer.new(after: 100, {}),
+            tick: nil,
+            next: nil,
             timeLeft: self.params.green,
             northSouth: .green,
             eastWest: .red
@@ -181,7 +184,8 @@ class Tst_M_Intersection: XCTestCase
     {
         dispatcher.model <== M.Intersection.Operating(
             params: params,
-            tick: Timer.new(after: 100, {}),
+            tick: nil,
+            next: nil,
             timeLeft: 0,
             northSouth: .yellow,
             eastWest: .red
@@ -210,7 +214,8 @@ class Tst_M_Intersection: XCTestCase
     {
         dispatcher.model <== M.Intersection.Operating(
             params: params,
-            tick: Timer.new(after: 100, {}),
+            tick: nil,
+            next: nil,
             timeLeft: self.params.green,
             northSouth: .red,
             eastWest: .green
@@ -238,7 +243,8 @@ class Tst_M_Intersection: XCTestCase
     {
         dispatcher.model <== M.Intersection.Operating(
             params: params,
-            tick: Timer.new(after: 100, {}),
+            tick: nil,
+            next: nil,
             timeLeft: 3.54.seconds, // random value
             northSouth: .yellow, // random value
             eastWest: .yellow    // random value
@@ -297,7 +303,8 @@ class Tst_M_Intersection: XCTestCase
     {
         dispatcher.model <== M.Intersection.Operating(
             params: params,
-            tick: Timer.new(after: 100, {}),
+            tick: nil,
+            next: nil,
             timeLeft: 3.54.seconds, // random value
             northSouth: .yellow, // random value
             eastWest: .yellow    // random value

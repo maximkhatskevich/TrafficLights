@@ -55,7 +55,9 @@ extension M
             
             let params: Params
             
-            var tick: Timer
+            var tick: Timer?
+            
+            var next: Timer?
             
             var timeLeft: TimeInterval = 0.0 // until switch red <-> green
             
@@ -90,15 +92,12 @@ extension M.Intersection
                 Operating(
                     params: p,
                     tick: Timer.every(p.tick) { next{ tick() } },
+                    next: Timer.after(p.green) { next{ yellowNorthSouth() } },
                     timeLeft: p.change,
                     northSouth: .green,
                     eastWest: .red
                 )
             }
-            
-            //===
-            
-            Timer.after(p.green) { next{ yellowNorthSouth() } }
         }
     }
     
@@ -132,11 +131,9 @@ extension M.Intersection
                 
                 $0.northSouth = .green
                 $0.eastWest = .red
+                
+                $0.next = Timer.after($0.params.green) { next{ yellowNorthSouth() } }
             }
-            
-            //===
-            
-            Timer.after(op.params.green) { next{ yellowNorthSouth() } }
         }
     }
     
@@ -149,11 +146,12 @@ extension M.Intersection
             
             //===
             
-            mutate{ $0.northSouth = .yellow }
-            
-            //===
-            
-            Timer.after(op.params.yellow) { next{ greenEastWest() } }
+            mutate{
+                
+                $0.northSouth = .yellow
+                
+                $0.next = Timer.after($0.params.yellow) { next{ greenEastWest() } }
+            }
         }
     }
     
@@ -174,11 +172,9 @@ extension M.Intersection
                 
                 $0.northSouth = .red
                 $0.eastWest = .green
+                
+                $0.next = Timer.after($0.params.green) { next{ yellowEastWest() } }
             }
-            
-            //===
-            
-            Timer.after(op.params.green) { next{ yellowEastWest() } }
         }
     }
     
@@ -191,11 +187,12 @@ extension M.Intersection
             
             //===
             
-            mutate{ $0.eastWest = .yellow }
-            
-            //===
-            
-            Timer.after(op.params.yellow) { next{ greenNorthSouth() } }
+            mutate{
+                
+                $0.eastWest = .yellow
+                
+                $0.next = Timer.after($0.params.yellow) { next{ greenNorthSouth() } }
+            }
         }
     }
     
@@ -204,7 +201,8 @@ extension M.Intersection
     {
         return transition(from: Operating.self, into: Ready.self) { op, become, _ in
             
-            op.tick.invalidate()
+            op.tick?.invalidate()
+            op.next?.invalidate()
             
             //===
             
