@@ -1,3 +1,4 @@
+[![license](https://img.shields.io/github/license/maximkhatskevich/TrafficLights.svg)](https://opensource.org/licenses/MIT)
 ![Platforms](https://img.shields.io/badge/platforms-ios-lightgrey.svg)
 [![GitHub tag](https://img.shields.io/github/tag/maximkhatskevich/TrafficLights.svg)](https://github.com/maximkhatskevich/TrafficLights/releases)
 ![Swift version](https://img.shields.io/badge/swift-3-orange.svg)
