@@ -31,6 +31,8 @@ extension M
             
             let change: TimeInterval
             
+            var cycle: TimeInterval { return change * 2 }
+            
             //===
             
             static
