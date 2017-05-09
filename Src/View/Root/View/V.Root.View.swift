@@ -16,6 +16,12 @@ import MKHState
 final
 class V_Root_View: UIView, DispatcherInitializable
 {
+    let status = UILabel()
+    
+    let toggle = UIButton(type: .custom)
+    
+    //===
+    
     lazy
     var state: StateCtrl<V_Root_View> =
         StateCtrl(for: self, V.Default.viewAnim())
@@ -55,9 +61,20 @@ class V_Root_View: UIView, DispatcherInitializable
 
 extension V_Root_View
 {
-    func configure(with m: M)
+    func configure(m: GlobalModel)
     {
-        //
+        switch m ==> M.Intersection.self
+        {
+            case is M.Intersection.Ready:
+                state.apply{ $0.awaiting() }.viaTransition()
+            
+            case let op as M.Intersection.Operating:
+                state.apply{ $0.running() }.viaTransition()
+                update(with: op)
+            
+            default:
+                break
+        }
     }
 }
 

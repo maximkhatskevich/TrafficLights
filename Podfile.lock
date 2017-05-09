@@ -10,7 +10,7 @@ PODS:
   - XCERequirement (1.4.3)
   - XCETesting (1.1.0):
     - XCERequirement (~> 1.4)
-  - XCEUniFlow (3.2.6):
+  - XCEUniFlow (3.2.8):
     - XCERequirement (~> 1.4)
 
 DEPENDENCIES:
@@ -47,7 +47,7 @@ SPEC CHECKSUMS:
   SwiftyTimer: 2efd74b060d69ad4f1496baf5bbedbe132125fcf
   XCERequirement: 38a1e135626757fd97d4e9da481a89b4537977a8
   XCETesting: f919f505728e88c797ed9e0e877a80e0ed3672a0
-  XCEUniFlow: 518b5d15149f2d6b94299b31f54c0c7777739f20
+  XCEUniFlow: d0bfc0edc04e132fba7fd107a2496053c6aa974f
 
 PODFILE CHECKSUM: 4a93d6808b4529bc6a728aaec4320a2a6b505dde
 

@@ -27,7 +27,8 @@ extension V_Root_View
             
             $0.sv(
                 
-                //
+                $0.status,
+                $0.toggle
             )
             
             //===
@@ -36,8 +37,19 @@ extension V_Root_View
             
             $0.layout(
             
-                //
+                100,
+                |-$0.status-| ~ 80,
+                8,
+                |-$0.toggle-| ~ 80,
+                ""
             )
+            
+            //===
+            
+            // configure UI controls
+            
+            $0.toggle.text("Start/Stop")
+            $0.toggle.setTitleColor(.black, for: .normal)
         }
     }
 }

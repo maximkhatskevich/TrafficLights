@@ -21,6 +21,26 @@ extension M
         // supposed to be a 2 road intersection
         // oriented North-South and East-West
         
+        struct Params
+        {
+            let tick: TimeInterval
+            
+            var green: TimeInterval { return change - yellow }
+            
+            let yellow: TimeInterval
+            
+            let change: TimeInterval
+            
+            //===
+            
+            static
+            let defaults = Params(
+                tick: 1.0.seconds,
+                yellow: 5.0.seconds,
+                change: 30.0.seconds
+            )
+        }
+        
         //===
         
         struct Ready: SimpleState { typealias UFLFeature = Intersection
@@ -31,6 +51,8 @@ extension M
         
         struct Operating: FeatureState { typealias UFLFeature = Intersection
             
+            let params: Params
+            
             var tick: Timer
             
             var timeLeft: TimeInterval = 0.0 // until switch red <-> green
@@ -39,26 +61,6 @@ extension M
             
             var eastWest: TrafficLight
         }
-    }
-}
-
-//===
-
-extension M.Intersection
-{
-    enum Params // scope
-    {
-        static
-        let tick = 1.0.second
-        
-        static
-        var green: TimeInterval { return change - yellow }
-        
-        static
-        let yellow = 5.0.seconds
-        
-        static
-        let change = 30.0.seconds
     }
 }
 
@@ -73,7 +75,7 @@ extension M.Intersection
     }
     
     static
-    func start() -> Action
+    func start(with p: Params = Params.defaults) -> Action
     {
         return transition(from: Ready.self, into: Operating.self) { _, become, next in
             
@@ -84,8 +86,9 @@ extension M.Intersection
             become{
                 
                 Operating(
-                    tick: Timer.every(Params.tick) { next{ tick() } },
-                    timeLeft: Params.change,
+                    params: p,
+                    tick: Timer.every(p.tick) { next{ tick() } },
+                    timeLeft: p.change,
                     northSouth: .green,
                     eastWest: .red
                 )
@@ -93,7 +96,7 @@ extension M.Intersection
             
             //===
             
-            Timer.after(Params.green) { next { yellowNorthSouth() } }
+            Timer.after(p.green) { next{ yellowNorthSouth() } }
         }
     }
     
@@ -102,7 +105,7 @@ extension M.Intersection
     {
         return actualization(of: Operating.self) { op, mutate, _ in
             
-            let delta = min(Params.tick, op.timeLeft)
+            let delta = min(op.params.tick, op.timeLeft)
             
             //===
             
@@ -121,7 +124,7 @@ extension M.Intersection
             
             //===
             
-            mutate {
+            mutate{
                 
                 $0.northSouth = .green
                 $0.eastWest = .red
@@ -129,7 +132,7 @@ extension M.Intersection
             
             //===
             
-            Timer.after(Params.green) { next { yellowNorthSouth() } }
+            Timer.after(op.params.green) { next{ yellowNorthSouth() } }
         }
     }
     
@@ -142,11 +145,11 @@ extension M.Intersection
             
             //===
             
-            mutate { $0.northSouth = .yellow }
+            mutate{ $0.northSouth = .yellow }
             
             //===
             
-            Timer.after(Params.yellow) { next { greenEastWest() } }
+            Timer.after(op.params.yellow) { next{ greenEastWest() } }
         }
     }
     
@@ -161,7 +164,7 @@ extension M.Intersection
             
             //===
             
-            mutate {
+            mutate{
                 
                 $0.northSouth = .red
                 $0.eastWest = .green
@@ -169,7 +172,7 @@ extension M.Intersection
             
             //===
             
-            Timer.after(Params.green) { next { yellowEastWest() } }
+            Timer.after(op.params.green) { next{ yellowEastWest() } }
         }
     }
     
@@ -182,11 +185,11 @@ extension M.Intersection
             
             //===
             
-            mutate { $0.eastWest = .yellow }
+            mutate{ $0.eastWest = .yellow }
             
             //===
             
-            Timer.after(Params.yellow) { next { greenNorthSouth() } }
+            Timer.after(op.params.yellow) { next{ greenNorthSouth() } }
         }
     }
     
@@ -200,6 +203,32 @@ extension M.Intersection
             //===
             
             become{ Ready() }
+        }
+    }
+    
+    static
+    func toggle() -> Action
+    {
+        return trigger { m, next in
+            
+            let intr = try REQ.value("Intersection is presented.") {
+                
+                m ==> M.Intersection.self
+            }
+            
+            //===
+            
+            switch intr
+            {
+                case is Operating:
+                    next{ stop() }
+                
+                case is Ready:
+                    next{ start() }
+                
+                default:
+                    break
+            }
         }
     }
 }

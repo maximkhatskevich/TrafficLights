@@ -12,4 +12,4 @@ import XCEUniFlow
 
 //===
 
-typealias M = GlobalModel
+enum M { } // scope

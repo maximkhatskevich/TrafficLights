@@ -8,6 +8,8 @@
 
 import Foundation
 
+import MKHViewEvents
+
 //===
 
 extension V_Root_View
@@ -15,10 +17,18 @@ extension V_Root_View
     static
     func binded() -> St
     {
-        return state { _ in
+        return state {
             
-            // $0.start
-            //   .onTap(#selector(startHandler), at: $0)
+             $0.toggle
+               .onTap(#selector(toggleHandler), at: $0)
         }
+    }
+    
+    //===
+    
+    @objc
+    func toggleHandler()
+    {
+        proxy?.submit{ M.Intersection.toggle() }
     }
 }
