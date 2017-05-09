@@ -77,7 +77,7 @@
 		55F47217958CD746CF3E6FEE /* R.generated.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		5D6B5693FC23B1AD7F28EAF8 /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		83BD7610D073BEC15EF39D0D /* Pods_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		84C97AF44F4D4367ED2FE77D /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = App.app; path = TrafficLights.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		84C97AF44F4D4367ED2FE77D /* TrafficLights.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrafficLights.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94102D7D1EBF0FCC00A9C45B /* V.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = V.swift; sourceTree = "<group>"; };
 		94102D7F1EBF10BD00A9C45B /* V.Delegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = V.Delegate.swift; sourceTree = "<group>"; };
 		94102D811EBF117E00A9C45B /* V.Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = V.Window.swift; sourceTree = "<group>"; };
@@ -155,7 +155,7 @@
 		2EFA8A2369B3245F52435A20 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				84C97AF44F4D4367ED2FE77D /* App.app */,
+				84C97AF44F4D4367ED2FE77D /* TrafficLights.app */,
 				CDBC24DF0B19795B5D7342B0 /* Tests.xctest */,
 			);
 			name = Products;
@@ -309,7 +309,7 @@
 			);
 			name = App;
 			productName = App;
-			productReference = 84C97AF44F4D4367ED2FE77D /* App.app */;
+			productReference = 84C97AF44F4D4367ED2FE77D /* TrafficLights.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */

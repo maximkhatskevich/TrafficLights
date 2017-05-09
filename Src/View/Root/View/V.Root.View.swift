@@ -16,9 +16,19 @@ import MKHState
 final
 class V_Root_View: UIView, DispatcherInitializable
 {
-    let status = UILabel()
+    let timer = UILabel() // display time left
     
-    let toggle = UIButton(type: .custom)
+    let intr = UIImageView() // intersection background image
+    
+    // traffic lights:
+    let tlNS1 = UIImageView()
+    let tlNS2 = UIImageView()
+    let tlEW1 = UIImageView()
+    let tlEW2 = UIImageView()
+    
+    let status = UILabel() // current status of animation
+    
+    let toggle = UIButton(type: .custom) // start/stop button
     
     //===
     

@@ -126,6 +126,8 @@ extension M.Intersection
             
             mutate{
                 
+                $0.timeLeft = $0.params.change
+                
                 $0.northSouth = .green
                 $0.eastWest = .red
             }
@@ -165,6 +167,8 @@ extension M.Intersection
             //===
             
             mutate{
+                
+                $0.timeLeft = $0.params.change
                 
                 $0.northSouth = .red
                 $0.eastWest = .green
